@@ -60,6 +60,7 @@ public class CrearController {
         textFieldTelefono.clear();
         textFieldEmail.clear();
     }
+
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(titulo);
@@ -67,6 +68,7 @@ public class CrearController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
+
     public void setBtnSalir(ActionEvent actionEvent) {
         try {
             // Cargar nueva vista
