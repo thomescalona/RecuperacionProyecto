@@ -37,28 +37,7 @@ public class ContactoDAO {
         return lista;
     }
 
-    public List<Contacto> obtenercolumnas() {
-        List<Contacto> lista = new ArrayList<>();
-        String sql = "SELECT c.nombre,c.apellido1,c.apellido2 FROM contacto";
 
-        try (Connection conn = DBUtil.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                Contacto c = new Contacto();
-                c.setNombre(rs.getString("nombre"));
-                c.setApellido1(rs.getString("apellido1"));
-                c.setApellido2(rs.getString("apellido2"));
-                lista.add(c);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lista;
-    }
 
     public void insertar(Contacto contacto) {
         String sql = "INSERT INTO contacto (nombre, apellido1, apellido2, telefono, email) VALUES (?, ?, ?, ?, ?)";
@@ -73,10 +52,10 @@ public class ContactoDAO {
             e.printStackTrace();
         }
     }
-    // --- NUEVA FUNCIÓN: Buscar Contactos por Teléfono ---
+    // --- NUEVA FUNCIÓN: Buscar Contactos por nombre ---
     public List<Contacto> buscarNombre(String nombreBuscado) {
         List<Contacto> contactosEncontrados = new ArrayList<>();
-        // Usamos LIKE para buscar coincidencias parciales del número de teléfono
+        // Usamos LIKE para buscar coincidencias parciales del nombre
         // y concatenamos '%' para que busque el texto en cualquier parte del campo.
         String sql = "SELECT id, nombre, apellido1, apellido2, telefono, email FROM contacto WHERE nombre LIKE ?";
 

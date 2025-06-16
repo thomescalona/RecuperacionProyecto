@@ -1,5 +1,6 @@
 package Controladores;
 
+import MYSQL.ContactoDAO;
 import POJOS.Contacto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,20 +12,12 @@ import java.sql.SQLException;
 
 public class EditarController {
 
+        //Método para recibir el contacto desde HomeController ---
+        private Contacto contactoAEditar; // Para guardar el contacto que vamos a modificar
+        private ContactoDAO contactoDAO; // Instancia del DAO
 
         public void setContacto(POJOS.Contacto contacto) {
                 this.contactoAEditar = contacto; // Guardamos el contacto recibido (a editar)
-
-                // Si no es null, rellenamos los campos del formulario con los datos actuales
-                if (contactoAEditar != null) {
-                        textFieldNombre.setText(contactoAEditar.getNombre());
-                        textFieldApellido1.setText(contactoAEditar.getApellido1());
-
-                        // Para evitar que se muestre "null", se comprueba si los campos opcionales están vacíos
-                        textFieldApellido2.setText(contactoAEditar.getApellido2() != null ? contactoAEditar.getApellido2() : "");
-                        textFieldTelefono.setText(contactoAEditar.getTelefono());
-                        textFieldEmail.setText(contactoAEditar.getEmail() != null ? contactoAEditar.getEmail() : "");
-                }
         }
 
         private void mostrarAlerta(Alert.AlertType tipo, String titulo, String encabezado, String contenido) {
@@ -35,7 +28,21 @@ public class EditarController {
                 alerta.showAndWait(); // La mostramos y esperamos respuesta
         }
 
-        private MYSQL.ContactoDAO contactoDAO; // Instancia de tu DAO
+        @FXML
+        public void cargarDatosEnPantalla(){
+                // Si no es null, rellenamos los campos del formulario con los datos actuales
+                if (contactoAEditar != null) {
+                        textFieldNombre.setText(contactoAEditar.getNombre());
+                        textFieldApellido1.setText(contactoAEditar.getApellido1());
+
+                        // Para evitar que se muestre "null", se comprueba si los campos opcionales están vacíos
+                        textFieldApellido2.setText(contactoAEditar.getApellido2() != null ? contactoAEditar.getApellido2() : "");
+                        textFieldTelefono.setText(contactoAEditar.getTelefono());
+                        textFieldEmail.setText(contactoAEditar.getEmail() != null ? contactoAEditar.getEmail() : "");
+                }
+
+        }
+
         @FXML
         public void initialize() {
                 contactoDAO = new MYSQL.ContactoDAO(); // Creamos el DAO para trabajar con la base de datos
@@ -49,8 +56,7 @@ public class EditarController {
 
 
 
-        //Método para recibir el contacto desde HomeController ---
-        private POJOS.Contacto contactoAEditar; // Para guardar el contacto que vamos a modificar
+
 
         @FXML
         void setBtnAgregar(ActionEvent event) {
@@ -113,6 +119,8 @@ public class EditarController {
                 Stage stage = (Stage) textFieldNombre.getScene().getWindow(); // Obtiene la ventana
                 stage.close(); // Cierra la ventana
         }
+
+
 
         @FXML
         void setTextFieldApellido1(ActionEvent event) {}

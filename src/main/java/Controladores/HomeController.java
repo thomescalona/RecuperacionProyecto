@@ -81,7 +81,7 @@ public class HomeController {
 
         if (contactoSeleccionado != null) {
             try {
-                // Cargar el FXML de la ventana de edición (tu editarContacto.fxml)
+                // Cargar el FXML de la ventana de edición
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/editarContacto.fxml"));
                 Parent root = loader.load();
 
@@ -95,6 +95,8 @@ public class HomeController {
                 stage.setTitle("Modificar Contacto");
                 stage.setScene(new Scene(root));
                 stage.initModality(Modality.APPLICATION_MODAL); // Hace que la nueva ventana bloquee la principal
+                // Antes de mostrar mandamos cargar los datos en pantalla
+                controller.cargarDatosEnPantalla();
                 stage.showAndWait(); // Espera a que la ventana de edición se cierre
 
                 // Cuando la ventana de edición se cierra, recargamos la tabla principal
@@ -112,7 +114,7 @@ public class HomeController {
 
 
 
-    // *** NUEVO MÉTODO para la búsqueda por teléfono ***
+    // metodo para la búsqueda por nombre
     @FXML
     void btnBuscarClick(ActionEvent event) {
         String textoBusqueda = textFieldNombre.getText(); // Obtenemos el texto del campo de búsqueda
